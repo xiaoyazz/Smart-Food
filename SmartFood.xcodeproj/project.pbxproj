@@ -6,6 +6,14 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		B2EF259C2CD821B90080D366 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = B2EF259B2CD821B90080D366 /* FirebaseAnalytics */; };
+		B2EF259F2CD8262B0080D366 /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = B2EF259E2CD8262B0080D366 /* FirebaseCore */; };
+		B2EF25A12CD826310080D366 /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = B2EF25A02CD826310080D366 /* FirebaseDatabase */; };
+		B2EF25A32CD826360080D366 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = B2EF25A22CD826360080D366 /* FirebaseFirestore */; };
+		B2EF25CA2CD842500080D366 /* FirebaseFirestoreCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = B2EF25C92CD842500080D366 /* FirebaseFirestoreCombine-Community */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		B2EF25872CD7050A0080D366 /* SmartFood.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SmartFood.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -23,6 +31,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B2EF25A12CD826310080D366 /* FirebaseDatabase in Frameworks */,
+				B2EF25A32CD826360080D366 /* FirebaseFirestore in Frameworks */,
+				B2EF259F2CD8262B0080D366 /* FirebaseCore in Frameworks */,
+				B2EF25CA2CD842500080D366 /* FirebaseFirestoreCombine-Community in Frameworks */,
+				B2EF259C2CD821B90080D366 /* FirebaseAnalytics in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -33,6 +46,7 @@
 			isa = PBXGroup;
 			children = (
 				B2EF25892CD7050A0080D366 /* SmartFood */,
+				B2EF259D2CD826220080D366 /* Frameworks */,
 				B2EF25882CD7050A0080D366 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -43,6 +57,13 @@
 				B2EF25872CD7050A0080D366 /* SmartFood.app */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		B2EF259D2CD826220080D366 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -65,6 +86,11 @@
 			);
 			name = SmartFood;
 			packageProductDependencies = (
+				B2EF259B2CD821B90080D366 /* FirebaseAnalytics */,
+				B2EF259E2CD8262B0080D366 /* FirebaseCore */,
+				B2EF25A02CD826310080D366 /* FirebaseDatabase */,
+				B2EF25A22CD826360080D366 /* FirebaseFirestore */,
+				B2EF25C92CD842500080D366 /* FirebaseFirestoreCombine-Community */,
 			);
 			productName = SmartFood;
 			productReference = B2EF25872CD7050A0080D366 /* SmartFood.app */;
@@ -94,6 +120,9 @@
 			);
 			mainGroup = B2EF257E2CD7050A0080D366;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				B2EF259A2CD821B90080D366 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = B2EF25882CD7050A0080D366 /* Products */;
 			projectDirPath = "";
@@ -324,6 +353,45 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		B2EF259A2CD821B90080D366 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 11.4.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		B2EF259B2CD821B90080D366 /* FirebaseAnalytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B2EF259A2CD821B90080D366 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalytics;
+		};
+		B2EF259E2CD8262B0080D366 /* FirebaseCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B2EF259A2CD821B90080D366 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseCore;
+		};
+		B2EF25A02CD826310080D366 /* FirebaseDatabase */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B2EF259A2CD821B90080D366 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseDatabase;
+		};
+		B2EF25A22CD826360080D366 /* FirebaseFirestore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B2EF259A2CD821B90080D366 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestore;
+		};
+		B2EF25C92CD842500080D366 /* FirebaseFirestoreCombine-Community */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B2EF259A2CD821B90080D366 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = "FirebaseFirestoreCombine-Community";
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = B2EF257F2CD7050A0080D366 /* Project object */;
 }

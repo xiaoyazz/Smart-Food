@@ -8,11 +8,66 @@
 import SwiftUI
 
 struct CategoryDetailsView: View {
+    
+    var category: FoodCategory
+    @EnvironmentObject var foodViewModel: FoodViewModel
+    
+    let dateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .medium
+        return formatter
+    }()
+
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        
+        NavigationStack {
+            VStack {
+                let categoryFoods = foodViewModel.foods.filter { $0.category == category.name }
+                
+                if categoryFoods.isEmpty {
+                    Text("0 items found.")
+                        .font(.headline)
+                        .foregroundColor(.secondary)
+                        .padding()
+                } else {
+                    List {
+                        ForEach(categoryFoods, id: \.id) { food in
+                            HStack {
+                                VStack(alignment: .leading, spacing: 4) {
+                                    // Food name
+                                    Text(food.name)
+                                        .font(.headline)
+
+                                    // Other details below the name
+                                    Text("Quantity: \(food.quantity)")
+                                        .font(.subheadline)
+                                        .foregroundColor(.secondary)
+                                    Text("Expiry: \(food.expirationDate, formatter: dateFormatter)")
+                                        .font(.subheadline)
+                                        .foregroundColor(.secondary)
+                                }
+                                Spacer()
+                            }
+                            .padding(.vertical, 4)
+                        }
+                        .onDelete { indexSet in
+                            indexSet.forEach { index in
+                                let food = categoryFoods[index]
+                                foodViewModel.deleteFood(food)
+                            }
+                        }
+                    }
+                }
+            }
+            .onAppear {
+                foodViewModel.fetchFoods(forCategory: category.name) // Fetch foods from Firestore
+            }
+            .navigationTitle(category.name)
+        }
     }
 }
 
 #Preview {
-    CategoryDetailsView()
+    CategoryDetailsView(category: FoodCategory(id: "sampleID", name: "Sample Category"))
+        .environmentObject(FoodViewModel())
 }
