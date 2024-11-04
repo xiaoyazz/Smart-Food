@@ -25,6 +25,13 @@ struct CategoryDetailsView: View {
                 let categoryFoods = foodViewModel.foods.filter { $0.category == category.name }
                 
                 if categoryFoods.isEmpty {
+                    
+                    Image("not-found")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 150, height: 150)
+                        .foregroundColor(.secondary)
+                    
                     Text("0 items found.")
                         .font(.headline)
                         .foregroundColor(.secondary)
