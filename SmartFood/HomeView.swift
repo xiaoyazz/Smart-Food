@@ -25,8 +25,8 @@ struct HomeView: View {
     }
     
     let columns = [
-        GridItem(.fixed(150), spacing: 16), 
-        GridItem(.fixed(150), spacing: 16)
+        GridItem(.fixed(170), spacing: 16),
+        GridItem(.fixed(170), spacing: 16)
     ]
     
     var body: some View {
