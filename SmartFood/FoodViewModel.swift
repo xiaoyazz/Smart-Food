@@ -30,6 +30,25 @@ class FoodViewModel : ObservableObject {
             } ?? []
         }
     }
+    
+    // fecth food by name string
+    func fetchFoodByName() {
+        db.getDocuments { snapshot, error in
+            if let error = error {
+                print("Error fetching food by name: \(error)")
+                return
+            }
+            
+            self.foods = snapshot?.documents.compactMap { document in
+                var name = try? document.data(as: Food.self)
+                name?.id = document.documentID
+                if name?.id == nil {
+                    print("Warning: Food name fetched without an id.")
+                }
+                return name
+            } ?? []
+        }
+    }
        
        // Create
        func addFood(_ food: Food) {

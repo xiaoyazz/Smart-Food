@@ -8,11 +8,58 @@
 import SwiftUI
 
 struct UpdateFoodView: View {
+    
+    @EnvironmentObject var foodViewModel: FoodViewModel
+    
+    @State var food: Food
+    @State var showAlert = false
+    
+    let dateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .medium
+        return formatter
+    }()
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        
+        NavigationStack{
+            
+            VStack{
+                Form {
+                            Section(header: Text("Food Details")) {
+                                TextField("Name", text: $food.name)
+                                
+                                Stepper(value: $food.quantity, in: 1...100) {
+                                    Text("Quantity: \(food.quantity)")
+                                }
+                                
+                                DatePicker("Expiration Date", selection: $food.expirationDate, displayedComponents: .date)
+                            }
+                        }
+                
+                Button("Save Changes"){
+                    foodViewModel.updateFood(food)
+                    showAlert = true
+                }
+                .frame(maxWidth: .infinity)
+                .padding() // For button text
+                .background(Color.blue)
+                .foregroundColor(.white)
+                .cornerRadius(8)
+                .padding(.horizontal) // For button itself
+                .alert("Saved.", isPresented: $showAlert) {
+                    Button("OK", role: .cancel){}
+                }
+            }
+            .navigationTitle("Update")
+            .padding(.bottom, 20)
+            Spacer()
+            
+        }
     }
 }
 
 #Preview {
-    UpdateFoodView()
+    UpdateFoodView(food: Food(id: "sampleID", name: "Sample Food", quantity: 2, expirationDate: Date(), category: "Sample Category"))
+        .environmentObject(FoodViewModel())
 }

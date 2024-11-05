@@ -15,8 +15,7 @@ struct AddFoodView: View {
     @State private var name: String = ""
     @State private var quantity: Int = 1
     @State private var expirationDate = Date()
-    @State private var category: String = ""
-    
+    @State private var category: String = "Fruit"
     @State private var showAlert : Bool = false
     @State private var alertMessage = ""
     
@@ -43,6 +42,9 @@ struct AddFoodView: View {
                             }
                         }
                     }
+//                .onAppear {
+//                    print("Categories loaded in AddFoodView:", foodCategoryViewModel.categories.map { $0.name })
+//                }
                     Button("Add") {
                         saveFood()
                         showAlert = true
@@ -57,7 +59,7 @@ struct AddFoodView: View {
                         Alert(title: Text("Add Food"), message: Text(alertMessage), dismissButton: .default(Text("OK")))
                     }
             }
-            .navigationTitle("Add Food")
+            .navigationTitle("Add")
             .padding(.bottom, 20)
             Spacer()
         }
@@ -70,9 +72,9 @@ struct AddFoodView: View {
             showAlert = true
         } else {
             let newFood = Food(id: nil, name: name, quantity: quantity, expirationDate: expirationDate, category: category)
-            let newCategory = FoodCategory(name: category)
+//            let newCategory = FoodCategory(name: category)
             foodViewModel.addFood(newFood)
-            foodCategoryViewModel.checkCategory(newCategory)
+//            foodCategoryViewModel.checkCategory(newCategory)
             alertMessage = "\(name) is saved successfully!"
             print("Food saved: \(name), \(quantity), \(expirationDate), \(category)")
             name = ""

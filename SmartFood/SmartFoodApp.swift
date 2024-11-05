@@ -38,6 +38,11 @@ struct SmartFoodApp: App {
                     .tabItem {
                         Label("Add", systemImage: "plus.circle")
                         }
+                
+                SearchResultsView()
+                    .tabItem{
+                        Label("Search", systemImage: "magnifyingglass")
+                    }
 
                 SettingsView()
                     .tabItem {

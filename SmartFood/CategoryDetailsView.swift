@@ -39,23 +39,27 @@ struct CategoryDetailsView: View {
                 } else {
                     List {
                         ForEach(categoryFoods, id: \.id) { food in
-                            HStack {
-                                VStack(alignment: .leading, spacing: 4) {
-                                    // Food name
-                                    Text(food.name)
-                                        .font(.headline)
+                            
+                            NavigationLink(destination: UpdateFoodView(food: food)){
+                                
+                                HStack {
+                                    VStack(alignment: .leading, spacing: 4) {
+                                        // Food name
+                                        Text(food.name)
+                                            .font(.headline)
 
-                                    // Other details below the name
-                                    Text("Quantity: \(food.quantity)")
-                                        .font(.subheadline)
-                                        .foregroundColor(.secondary)
-                                    Text("Expiry: \(food.expirationDate, formatter: dateFormatter)")
-                                        .font(.subheadline)
-                                        .foregroundColor(.secondary)
+                                        // Other details below the name
+                                        Text("Quantity: \(food.quantity)")
+                                            .font(.subheadline)
+                                            .foregroundColor(.secondary)
+                                        Text("Expiry: \(food.expirationDate, formatter: dateFormatter)")
+                                            .font(.subheadline)
+                                            .foregroundColor(.secondary)
+                                    }
+                                    Spacer()
                                 }
-                                Spacer()
+                                .padding(.vertical, 4)
                             }
-                            .padding(.vertical, 4)
                         }
                         .onDelete { indexSet in
                             indexSet.forEach { index in
@@ -75,6 +79,6 @@ struct CategoryDetailsView: View {
 }
 
 #Preview {
-    CategoryDetailsView(category: FoodCategory(id: "sampleID", name: "Sample Category"))
+    CategoryDetailsView(category: FoodCategory(id: "sampleID", name: "Sample Category", imageName: "Sample Image"))
         .environmentObject(FoodViewModel())
 }

@@ -12,45 +12,45 @@ struct HomeView: View {
     
     // Initialize Food Categoruy ViewModel
     @EnvironmentObject private var foodCategoryViewModel : FoodCategoryViewModel
+    @EnvironmentObject private var foodViewModel : FoodViewModel
+    @State private var searchText: String = ""
+    @State private var searchRes : [Food] = []
     
-    let foodImages = ["food1", "food2", "food3", "food4", "food5"]
+    private var filteredCategories: [FoodCategory] {
+        if searchText.isEmpty {
+            return foodCategoryViewModel.categories
+        } else {
+            return foodCategoryViewModel.categories.filter { $0.name.localizedCaseInsensitiveContains(searchText) }
+        }
+    }
+    
+    let columns = [
+        GridItem(.fixed(150), spacing: 16), 
+        GridItem(.fixed(150), spacing: 16)
+    ]
     
     var body: some View {
         NavigationStack {
             VStack {
-                
-                // Horizontal Image Carousel
-                ScrollView(.horizontal, showsIndicators: false) {
-                    HStack(spacing: 16) {
-                        ForEach(foodImages, id: \.self) { imageName in
-                            Image(imageName)
-                                .resizable()
-                                .scaledToFill()
-                                .frame(width: 250, height: 150)
-                                .clipped()
-                                .cornerRadius(10)
-                                .shadow(radius: 4)
+                // Grid layout
+                ScrollView {
+                    Spacer()
+                    LazyVGrid(columns: columns, spacing: 18) {
+                        ForEach(filteredCategories, id: \.id) { category in
+                            NavigationLink(destination: CategoryDetailsView(category: category)) {
+                                CategoryCardView(category: category)
+                            }
                         }
                     }
                     .padding(.horizontal)
                 }
-                .padding(.vertical, 10)
-                
-                List{
-                    // Filter out the nil IDs
-                    ForEach(foodCategoryViewModel.categories.compactMap { $0.id != nil ? $0 : nil }, id: \.id) { category in
-                        NavigationLink(destination: CategoryDetailsView(category: category)) {
-                            Text(category.name)
-                        }
-                    }
-                }
-                .navigationTitle("Home")
-                .listStyle(.grouped)
             }
+            .navigationTitle("What's In My Fridge")
             .onAppear {
                 foodCategoryViewModel.fetchCategories() // Fetch categories when HomeView appears
             }
         }
+        .searchable(text: $searchText)
     }
 }
 

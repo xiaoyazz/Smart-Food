@@ -15,21 +15,21 @@ class FoodCategoryViewModel: ObservableObject {
     @Published var categories: [FoodCategory] = []
     
     init() {
-        loadCategory()
+//        loadCategory()
     }
     
     // Load pre-build category
     func loadCategory() {
 
-        categories = [
-            FoodCategory(name: "Fruit"),
-            FoodCategory(name: "Vegetable"),
-            FoodCategory(name: "Dairy"),
-            FoodCategory(name: "Protein"),
-            FoodCategory(name: "Bakery"),
-            FoodCategory(name: "Frozen")
-        ]
-        
+//        categories = [
+//            FoodCategory(name: "Fruit"),
+//            FoodCategory(name: "Vegetable"),
+//            FoodCategory(name: "Dairy"),
+//            FoodCategory(name: "Protein"),
+//            FoodCategory(name: "Bakery"),
+//            FoodCategory(name: "Frozen")
+//        ]
+//        
 //        for category in categories {
 //             guard let id = category.id else { continue }
 //             
