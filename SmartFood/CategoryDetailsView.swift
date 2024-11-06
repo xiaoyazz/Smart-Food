@@ -81,4 +81,5 @@ struct CategoryDetailsView: View {
 #Preview {
     CategoryDetailsView(category: FoodCategory(id: "sampleID", name: "Sample Category", imageName: "Sample Image"))
         .environmentObject(FoodViewModel())
+        .environmentObject(FoodCategoryViewModel())
 }

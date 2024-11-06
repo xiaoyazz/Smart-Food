@@ -27,22 +27,24 @@ struct UpdateFoodView: View {
             
             VStack{
                 Form {
-                            Section(header: Text("Food Details")) {
-                                TextField("Name", text: $food.name)
+                        
+                    TextField("Name", text: $food.name)
+                    
+                    Stepper(value: $food.quantity, in: 1...100) {
+                        Text("Quantity: \(food.quantity)")
+                    }
                                 
-                                Stepper(value: $food.quantity, in: 1...100) {
-                                    Text("Quantity: \(food.quantity)")
-                                }
-                                
-                                DatePicker("Expiration Date", selection: $food.expirationDate, displayedComponents: .date)
-                                
-                                Picker("Category", selection: $food.category) {
-                                    ForEach(foodCategoryViewModel.categories, id: \.self) { category in
-                                        Text(category.name).tag(category.name)
-                                    }
-                                }
-                            }
+                    DatePicker("Expiration Date", selection: $food.expirationDate, displayedComponents: .date)
+                            
+                    Picker("Category", selection: $food.category) {
+                        ForEach(foodCategoryViewModel.categories, id: \.self) { category in
+                            Text(category.name).tag(category.name)
                         }
+                    }
+                    
+                    Toggle("Enable Expiration Notification", isOn: $foodViewModel.isNotificationEnabled)
+                        .padding(.vertical)
+                }
                 
                 Button("Save Changes"){
                     foodViewModel.updateFood(food)
@@ -58,7 +60,7 @@ struct UpdateFoodView: View {
                     Button("OK", role: .cancel){}
                 }
             }
-            .navigationTitle("Update")
+            .navigationTitle("\(food.name)")
             .padding(.bottom, 20)
             Spacer()
             
@@ -69,4 +71,5 @@ struct UpdateFoodView: View {
 #Preview {
     UpdateFoodView(food: Food(id: "sampleID", name: "Sample Food", quantity: 2, expirationDate: Date(), category: "Sample Category"))
         .environmentObject(FoodViewModel())
+        .environmentObject(FoodCategoryViewModel())
 }

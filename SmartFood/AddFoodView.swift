@@ -41,10 +41,12 @@ struct AddFoodView: View {
                                 Text(category.name).tag(category.name)
                             }
                         }
+                    
+                    // Allow user enable notification
+                    Toggle("Enable Expiration Notification", isOn: $foodViewModel.isNotificationEnabled)
+                        .padding(.vertical)
                     }
-//                .onAppear {
-//                    print("Categories loaded in AddFoodView:", foodCategoryViewModel.categories.map { $0.name })
-//                }
+
                     Button("Add") {
                         saveFood()
                         showAlert = true

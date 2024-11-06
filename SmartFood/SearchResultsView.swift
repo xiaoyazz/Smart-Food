@@ -78,4 +78,6 @@ struct SearchResultsView: View {
 
 #Preview {
     SearchResultsView()
+        .environmentObject(FoodCategoryViewModel())
+        .environmentObject(FoodViewModel())
 }

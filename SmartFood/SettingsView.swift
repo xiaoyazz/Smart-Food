@@ -28,4 +28,6 @@ struct SettingsView: View {
 
 #Preview {
     SettingsView()
+        .environmentObject(FoodCategoryViewModel())
+        .environmentObject(FoodViewModel())
 }

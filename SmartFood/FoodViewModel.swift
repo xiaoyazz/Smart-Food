@@ -8,9 +8,13 @@
 import Foundation
 import Firebase
 import FirebaseFirestore
+import UserNotifications
 
 class FoodViewModel : ObservableObject {
+    
     @Published var foods: [Food] = []
+    @Published var isNotificationEnabled: Bool = true
+    
     private var db = Firestore.firestore().collection("Food")
     
     init() {
@@ -54,6 +58,10 @@ class FoodViewModel : ObservableObject {
        func addFood(_ food: Food) {
            do {
                _ = try db.addDocument(from: food)
+               
+               if isNotificationEnabled {
+                   scheduleExpiryNotification(for: food.name, expiryDate: food.expirationDate)
+               }
            } catch let error {
                print("Error adding food: \(error)")
            }
@@ -64,6 +72,10 @@ class FoodViewModel : ObservableObject {
            if let id = food.id {
                do {
                    try db.document(id).setData(from: food)
+                   
+                   if isNotificationEnabled {
+                       scheduleExpiryNotification(for: food.name, expiryDate: food.expirationDate)
+                   }
                } catch let error {
                    print("Error updating food: \(error)")
                }
@@ -80,6 +92,67 @@ class FoodViewModel : ObservableObject {
             }
         }
     }
+    
+    // Request user notification
+    func requestNotificationPermission() {
+        let center = UNUserNotificationCenter.current()
+        center.requestAuthorization(options: [.alert, .sound, .badge]) { granted, error in
+            if let error = error {
+                print("Error requesting notification permission: \(error)")
+            }
+            print("Notification permission granted: \(granted)")
+        }
+    }
+    
+    // schedule a local notification
+    func scheduleExpiryNotification(for foodName: String, expiryDate: Date) {
+        let content = UNMutableNotificationContent()
+        content.title = "Food Expiry Reminder"
+        content.body = "\(foodName) will expire tomorrow. Consider using it soon!"
+        content.sound = .default
+
+        // Calculate the time interval to trigger the notification 1 day (24 hours) before expiry
+//        let oneDayBeforeExpiry = expiryDate.addingTimeInterval(-86400) // 86,400 seconds in a day
+//        let timeInterval = oneDayBeforeExpiry.timeIntervalSinceNow
+//
+//        // Check if the interval is positive, meaning the expiry date is still in the future
+//        if timeInterval > 0 {
+//            let trigger = UNTimeIntervalNotificationTrigger(timeInterval: timeInterval, repeats: false)
+//            let request = UNNotificationRequest(identifier: "\(foodName)_expiryReminder", content: content, trigger: trigger)
+        
+        if let imageURL = Bundle.main.url(forResource: "AppIcon", withExtension: "png") {
+            let attachment = try? UNNotificationAttachment(identifier: "image", url: imageURL, options: nil)
+            if let attachment = attachment {
+                content.attachments = [attachment]
+            }
+        }
+
+        
+        // Set trigger to 5 seconds for testing
+            let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 5, repeats: false)
+            let request = UNNotificationRequest(identifier: "\(foodName)_testReminder", content: content, trigger: trigger)
+        
+        UNUserNotificationCenter.current().add(request) { error in
+            if let error = error {
+                print("Error scheduling notification: \(error)")
+            } else {
+                print("Test notification scheduled to trigger in 5 seconds.")
+            }
+        }
+
+//            UNUserNotificationCenter.current().add(request) { error in
+//                if let error = error {
+//                    print("Error scheduling notification: \(error)")
+//                } else {
+//                    print("Notification scheduled 1 day before \(foodName)'s expiry.")
+//                }
+//            }
+//        } else {
+//            print("Expiry date has already passed or is within 24 hours.")
+//        }
+    }
+
+
     
     
 }
