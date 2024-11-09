@@ -74,7 +74,7 @@ struct HomeView: View {
             }
         }
         .searchable(text: $searchText,
-                    placement: .navigationBarDrawer(displayMode: .always)) // MUST have the placement attribute, or else the searchbar will disappear after navigation back from CategoryDetailsView
+                    placement: .navigationBarDrawer(displayMode: .always)) // MUST have the placement attribute, or else the searchbar will disappear after navigation back from CategoryDetailsView!!!😠
     }
 }
 

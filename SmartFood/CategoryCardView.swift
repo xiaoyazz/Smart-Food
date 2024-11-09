@@ -14,12 +14,13 @@ struct CategoryCardView: View {
         VStack {
             Image(category.imageName)
                 .resizable()
-                .frame(width: 70, height: 70)
+                .frame(width: 80, height: 80)
                 .clipShape(RoundedRectangle(cornerRadius: 8))
             
             Text(category.name)
                 .font(.headline)
                 .foregroundColor(.primary)
+                .padding()
         }
         .frame(width: 170, height: 170)
         .overlay(
